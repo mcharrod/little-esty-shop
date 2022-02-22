@@ -1,17 +1,22 @@
 Rails.application.routes.draw do
   get '/', to: 'welcome#index'
 
-  namespace :merchants, module: :merchants do
-    get ':id', to: 'dashboard#index'
-
-    get ':id/items', to: 'items#index'
-    get ':merchant_id/items/:item_id', to: 'items#show'
-    get ':merchant_id/items/:item_id/edit', to: 'items#edit'
-    patch ':merchant_id/items/:item_id', to: 'items#update'
-
-    get ':id/invoices', to: 'invoices#index'
-    get ':merchant_id/invoices/:invoice_id', to: 'invoices#show'
+  resources :merchants, only:[:show], module: :merchants do
+    resources :invoices, only:[:index, :show]
+    resources :items, only:[:index, :show, :edit, :update]
   end
+
+  # namespace :merchants, module: :merchants do
+  #   get ':id', to: 'dashboard#index'
+
+  #   get ':id/items', to: 'items#index'
+  #   get ':merchant_id/items/:item_id', to: 'items#show'
+  #   get ':merchant_id/items/:item_id/edit', to: 'items#edit'
+  #   patch ':merchant_id/items/:item_id', to: 'items#update'
+  #
+  #   get ':id/invoices', to: 'invoices#index'
+  #   get ':merchant_id/invoices/:invoice_id', to: 'invoices#show'
+  # end
 
   namespace :admin, module: :admin do
     get '/', to: 'dashboard#index'
