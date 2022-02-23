@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     post '/merchants/create', to: 'merchants#create'
     get '/merchants/:id/edit', to: 'merchants#edit'
     patch '/merchants/:id', to: 'merchants#update'
+    get '/invoices', to: 'admin_invoices#index'
+    get '/invoices/:id', to: 'admin_invoices#show'
 
   end
 end
