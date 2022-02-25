@@ -6,6 +6,20 @@ class Merchant < ApplicationRecord
   has_many :transactions, through: :invoices
 
   validates_presence_of :name
+  validates_presence_of :status
 
-  enum status: { "disabled" => 0, "enabled" => 1 }
+  enum status: { "disabled" => 0, "enabled" => 1}
+
+  def ordered_items
+    items.order(:name)
+  end
+
+  def self.enabled
+    where(status: 1)
+  end
+
+  def self.disabled
+    where(status: 0)
+  end
+
 end
