@@ -1,4 +1,5 @@
 class Admin::DashboardController < ApplicationController
-    def index
-    end
+  def index
+    @repository = GithubFacade.repository
   end
+end
