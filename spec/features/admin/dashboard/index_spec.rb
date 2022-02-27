@@ -94,67 +94,82 @@ describe 'Admin Dashboard Index Page' do
     expect(current_path).to eq("/admin/invoices/#{@invoice1.id}")
   end
 
-  it "US20" do
-    # creating additional customers so that there are more than 5, so that some will have to be excluded from the "top customers" section
-    customer5 = Customer.create!(first_name: "Varky", last_name: "Vark" )
-    customer6 = Customer.create!(first_name: "Sharky", last_name: "Shark" )
-    customer7 = Customer.create!(first_name: "Tarky", last_name: "Tark" )
+  it "US20 - Top 5 Customers" do
+    # Customer 1 will have 4 successful transactions over 4 invoices
+    customer1 = create(:customer)
+    invoice1 = create(:invoice, customer_id: customer1.id)
+    invoice2 = create(:invoice, customer_id: customer1.id)
+    invoice3 = create(:invoice, customer_id: customer1.id)
+    invoice4 = create(:invoice, customer_id: customer1.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice2.id)
+    create(:transaction, result: 0, invoice_id: invoice3.id)
+    create(:transaction, result: 0, invoice_id: invoice4.id)
 
+    # Customer 2 will have 1 successful transactions on 1 invoice
+    customer2 = create(:customer)
+    invoice1 = create(:invoice, customer_id: customer2.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
 
-    # below we are creating additional invoices with a "completed" status...
-    # AND invoice_items with a "shipped" status...
-    # using BOTH of them to define a "successful transaction"
+    # Customer 3 will have 1 failed transaction over 1 invoice
+    customer3 = create(:customer)
+    invoice1 = create(:invoice, customer_id: customer3.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
 
-    # @customer4 has 5 successful transactions (including one in the before :each above)
-    invoice6 = @customer4.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice6.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
-    invoice7 = @customer4.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice7.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
-    invoice8 = @customer4.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice8.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
-    invoice9 = @customer4.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice9.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
+    # Customer 4 will have 5 successful and 2 failed transactions over 3 invoices
+    customer4 = create(:customer)
+    invoice1 = create(:invoice, customer_id: customer4.id)
+    invoice2 = create(:invoice, customer_id: customer4.id)
+    invoice3 = create(:invoice, customer_id: customer4.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice2.id)
+    create(:transaction, result: 0, invoice_id: invoice3.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice2.id)
+    create(:transaction, result: 1, invoice_id: invoice3.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
 
-    # @customer1 has 4 successful transactions
-    invoice10 = @customer1.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice10.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
-    invoice11 = @customer1.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice11.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
-    invoice12 = @customer1.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice12.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
-    invoice13 = @customer1.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice13.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
+    # Customer 5 will have 3 successful transactions over 1 invoice
+    customer5 = create(:customer)
+    invoice1 = create(:invoice, customer_id: customer5.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
 
-    # customer5 has 3 successful transactions
-    invoice14 = customer5.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice14.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
-    invoice15 = customer5.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice15.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
-    invoice16 = customer5.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice16.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
+    # Customer 6 will have 7 failed transactions on 1 invoice
+    customer6 = create(:customer)
+    invoice1 = create(:invoice, customer_id: customer6.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
 
-    # @customer2 has 2 successful transactions
-    invoice17 = @customer2.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice17.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
-    invoice18 = @customer2.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice18.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
+    # Customer 7 will have 2 successful transactions on 2 invoices
+    customer7 = create(:customer)
+    invoice1 = create(:invoice, customer_id: customer7.id)
+    invoice2 = create(:invoice, customer_id: customer7.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice2.id)
 
-    # customer7 has 1 successful transaction
-    invoice19 = customer7.invoices.create!(status: 2)
-    InvoiceItem.create!(invoice_id: invoice19.id, item_id: @item2.id, quantity: 1, unit_price: 2000, status: 2)
-
+    # Customer 8 will have no transactions or invoices
+    customer8 = create(:customer)
     visit '/admin'
 
+    # Finally we get to test something!
     within("#top-customers") do
       expect(page).to have_content("Top 5 Customers")
-      expect(page).to have_content("1. #{@customer4.name}")
-      expect(page).to have_content("2. #{@customer1.name}")
+      expect(page).to have_content("1. #{customer4.name}")
+      expect(page).to have_content("2. #{customer1.name}")
       expect(page).to have_content("3. #{customer5.name}")
-      expect(page).to have_content("4. #{@customer2.name}")
-      expect(page).to have_content("5. #{customer7.name}")
+      expect(page).to have_content("4. #{customer7.name}")
+      expect(page).to have_content("5. #{customer2.name}")
 
-      expect(page).to_not have_content("#{@customer3.name}")
+      expect(page).to_not have_content("#{customer3.name}")
       expect(page).to_not have_content("#{customer6.name}")
+      expect(page).to_not have_content("#{customer8.name}")
     end
   end
 end
