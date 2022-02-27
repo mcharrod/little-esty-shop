@@ -94,7 +94,7 @@ describe 'Admin Dashboard Index Page' do
     expect(current_path).to eq("/admin/invoices/#{@invoice1.id}")
   end
 
-  it "US20 - Top 5 Customers" do
+  xit "US20 - Top 5 Customers" do
     # Customer 1 will have 4 successful transactions over 4 invoices
     customer1 = create(:customer)
     invoice1 = create(:invoice, customer_id: customer1.id)

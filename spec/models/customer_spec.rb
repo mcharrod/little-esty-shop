@@ -19,7 +19,7 @@ RSpec.describe Customer, type: :model do
   end
 
   describe 'class methods' do
-    it 'US20' do
+    xit 'US20 - Top 5 Customers' do
       # Customer 1 will have 4 successful transactions over 4 invoices
       customer1 = create(:customer)
       invoice1 = create(:invoice, customer_id: customer1.id)
