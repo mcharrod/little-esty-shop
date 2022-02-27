@@ -12,4 +12,18 @@ class Invoice < ApplicationRecord
   def total_revenue
     self.items.sum(:unit_price)
   end
+
+
+  def format_date
+    created_at.strftime("%A, %B %d, %Y")
+  end
+
+  def self.all_open_oldest_first
+    where(status: "in progress").order(:created_at)
+  end
+
+  def self.incomplete
+    Invoice.where.not(status: 1).joins(:invoice_items).where.not(status: 2).group("invoices.id")
+
+  end
 end
