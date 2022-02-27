@@ -93,8 +93,51 @@ describe 'Admin Dashboard Index Page' do
     click_link("Invoice ID: #{@invoice1.id}")
     expect(current_path).to eq("/admin/invoices/#{@invoice1.id}")
   end
+end
 
-  xit "US20 - Top 5 Customers" do
+RSpec.describe "Admin dashboard" do
+
+  it "US20 - Top 5 Customers" do
+    # lowest to highest successful transactions: 2(1), 7(2), 5(3), 1(4), 4(5)
+
+    # Customer 8 will have no transactions or invoices
+    customer8 = create(:customer)
+
+    # Customer 3 will have 1 failed transaction over 1 invoice
+    customer3 = create(:customer)
+    invoice1 = create(:invoice, customer_id: customer3.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+
+    # Customer 6 will have 7 failed transactions on 1 invoice
+    customer6 = create(:customer)
+    invoice1 = create(:invoice, customer_id: customer6.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+
+    # Customer 2 will have 1 successful transactions on 1 invoice
+    customer2 = create(:customer)
+    invoice1 = create(:invoice, customer_id: customer2.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+
+    # Customer 7 will have 2 successful transactions on 2 invoices
+    customer7 = create(:customer)
+    invoice1 = create(:invoice, customer_id: customer7.id)
+    invoice2 = create(:invoice, customer_id: customer7.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice2.id)
+
+    # Customer 5 will have 3 successful transactions over 1 invoice
+    customer5 = create(:customer)
+    invoice1 = create(:invoice, customer_id: customer5.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+
     # Customer 1 will have 4 successful transactions over 4 invoices
     customer1 = create(:customer)
     invoice1 = create(:invoice, customer_id: customer1.id)
@@ -105,16 +148,6 @@ describe 'Admin Dashboard Index Page' do
     create(:transaction, result: 0, invoice_id: invoice2.id)
     create(:transaction, result: 0, invoice_id: invoice3.id)
     create(:transaction, result: 0, invoice_id: invoice4.id)
-
-    # Customer 2 will have 1 successful transactions on 1 invoice
-    customer2 = create(:customer)
-    invoice1 = create(:invoice, customer_id: customer2.id)
-    create(:transaction, result: 0, invoice_id: invoice1.id)
-
-    # Customer 3 will have 1 failed transaction over 1 invoice
-    customer3 = create(:customer)
-    invoice1 = create(:invoice, customer_id: customer3.id)
-    create(:transaction, result: 1, invoice_id: invoice1.id)
 
     # Customer 4 will have 5 successful and 2 failed transactions over 3 invoices
     customer4 = create(:customer)
@@ -129,34 +162,9 @@ describe 'Admin Dashboard Index Page' do
     create(:transaction, result: 1, invoice_id: invoice3.id)
     create(:transaction, result: 1, invoice_id: invoice1.id)
 
-    # Customer 5 will have 3 successful transactions over 1 invoice
-    customer5 = create(:customer)
-    invoice1 = create(:invoice, customer_id: customer5.id)
-    create(:transaction, result: 0, invoice_id: invoice1.id)
-    create(:transaction, result: 0, invoice_id: invoice1.id)
-    create(:transaction, result: 0, invoice_id: invoice1.id)
-
-    # Customer 6 will have 7 failed transactions on 1 invoice
-    customer6 = create(:customer)
-    invoice1 = create(:invoice, customer_id: customer6.id)
-    create(:transaction, result: 1, invoice_id: invoice1.id)
-    create(:transaction, result: 1, invoice_id: invoice1.id)
-    create(:transaction, result: 1, invoice_id: invoice1.id)
-    create(:transaction, result: 1, invoice_id: invoice1.id)
-    create(:transaction, result: 1, invoice_id: invoice1.id)
-    create(:transaction, result: 1, invoice_id: invoice1.id)
-    create(:transaction, result: 1, invoice_id: invoice1.id)
-
-    # Customer 7 will have 2 successful transactions on 2 invoices
-    customer7 = create(:customer)
-    invoice1 = create(:invoice, customer_id: customer7.id)
-    invoice2 = create(:invoice, customer_id: customer7.id)
-    create(:transaction, result: 0, invoice_id: invoice1.id)
-    create(:transaction, result: 0, invoice_id: invoice2.id)
-
-    # Customer 8 will have no transactions or invoices
-    customer8 = create(:customer)
     visit '/admin'
+
+    # lowest to highest successful transactions: 2(1), 7(2), 5(3), 1(4), 4(5)
 
     # Finally we get to test something!
     within("#top-customers") do
