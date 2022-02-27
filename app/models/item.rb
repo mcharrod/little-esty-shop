@@ -17,4 +17,9 @@ class Item < ApplicationRecord
   def self.disabled
     where(status: 0)
   end
+
+  def money_made
+    invoice_items.sum('quantity * unit_price')
+  end
+
 end
