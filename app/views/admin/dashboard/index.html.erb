@@ -1,9 +1,14 @@
 <div class="container text-center">
 <h1> Admin Dashboard </h1>
 
-
-
 <%= link_to "View invoices", "/admin/invoices" %>
+
+<div id="top-customers">
+  <h2>Top 5 Customers</h2>
+  <% @customers.top_five.each_with_index do |customer, index| %>
+  <%= "#{index}. #{customer.first_name}: successful transactions: #{customer.transaction_count}" %>
+  <% end %>
+</div>
 
 <h2>Incomplete Invoices</h2>
 
@@ -22,4 +27,3 @@
   <%end%>
   </ul>
 </div>
-

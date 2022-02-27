@@ -98,7 +98,7 @@ end
 RSpec.describe "Admin dashboard" do
 
   it "US20 - Top 5 Customers" do
-    # lowest to highest successful transactions: 2(1), 7(2), 5(3), 1(4), 4(5)
+    # highest to lowest successful transactions: 4(5), 1(4), 5(3), 7(2), 2(1).
 
     # Customer 8 will have no transactions or invoices
     customer8 = create(:customer)
@@ -164,20 +164,20 @@ RSpec.describe "Admin dashboard" do
 
     visit '/admin'
 
-    # lowest to highest successful transactions: 2(1), 7(2), 5(3), 1(4), 4(5)
+    # highest to lowest successful transactions: 4(5), 1(4), 5(3), 7(2), 2(1).
 
     # Finally we get to test something!
     within("#top-customers") do
       expect(page).to have_content("Top 5 Customers")
-      expect(page).to have_content("1. #{customer4.name}")
-      expect(page).to have_content("2. #{customer1.name}")
-      expect(page).to have_content("3. #{customer5.name}")
-      expect(page).to have_content("4. #{customer7.name}")
-      expect(page).to have_content("5. #{customer2.name}")
+      expect(page).to have_content("1. #{customer4.first_name}: successful transactions: 5")
+      expect(page).to have_content("2. #{customer1.first_name}: successful transactions: 4")
+      expect(page).to have_content("3. #{customer5.first_name}: successful transactions: 3")
+      expect(page).to have_content("4. #{customer7.first_name}: successful transactions: 2")
+      expect(page).to have_content("5. #{customer2.first_name}: successful transactions: 1")
 
-      expect(page).to_not have_content("#{customer3.name}")
-      expect(page).to_not have_content("#{customer6.name}")
-      expect(page).to_not have_content("#{customer8.name}")
+      expect(page).to_not have_content("#{customer3.first_name}")
+      expect(page).to_not have_content("#{customer6.first_name}")
+      expect(page).to_not have_content("#{customer8.first_name}")
     end
   end
 end
