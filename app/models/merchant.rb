@@ -11,8 +11,15 @@ class Merchant < ApplicationRecord
   enum status: { "disabled" => 0, "enabled" => 1 }
 
   def ready_items
-    # grab all the invoices unless status is shipped
-    invoice_items.where.not(status: 2)
+    # order the invoices by created at date, old to new
+    # then remove all the items where they are already shipped
+
+     invoice_items.where.not(status: 2)
+     .joins(:invoice).order("invoices.created_at")
+
+    # invoices.order(:created_at)
+    # .joins(:invoice_items)
+    # .where.not(invoice_items: { status: 2 })
   end
 
   def ordered_items

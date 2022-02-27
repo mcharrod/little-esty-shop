@@ -84,6 +84,4 @@ RSpec.describe 'merchant item index', type: :feature do
     end
     expect(page).to have_content("Item status updated!")
   end
-
-
 end
