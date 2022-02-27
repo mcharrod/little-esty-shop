@@ -78,12 +78,12 @@ RSpec.describe Merchant, type: :model do
     invoice_item8 = InvoiceItem.create!(invoice_id: invoice5.id, item_id: item2.id, quantity: 1, unit_price: 2000, status: 1)
     invoice_item9 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item4.id, quantity: 3, unit_price: 1400, status: 2)
 
-    transaction1 = Transaction.create!(credit_card_number: 123456, result: 1, invoice_id: invoice1.id)
-    transaction2 = Transaction.create!(credit_card_number: 123456, result: 1, invoice_id: invoice2.id)
-    transaction3 = Transaction.create!(credit_card_number: 123456, result: 1, invoice_id: invoice3.id)
-    transaction4 = Transaction.create!(credit_card_number: 123456, result: 1, invoice_id: invoice4.id)
-    transaction5 = Transaction.create!(credit_card_number: 123456, result: 1, invoice_id: invoice5.id)
-
+    transaction1 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    transaction2 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice2.id)
+    transaction3 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice3.id)
+    transaction4 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice4.id)
+    transaction5 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice5.id)
+  
     expect(merchant1.top_five).to eq([item2, item1, item4, item7, item3])
   end
 
