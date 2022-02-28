@@ -5,8 +5,12 @@
 
 <div id="top-customers">
   <h2>Top 5 Customers</h2>
+  
   <% @customers.top_five.each_with_index do |customer, index| %>
-  <%= "#{index}. #{customer.first_name}: successful transactions: #{customer.transaction_count}" %>
+
+    <p><%= "#{index + 1}. #{customer.first_name}:
+      successful transactions: #{customer.transaction_count}" %></p>
+
   <% end %>
 </div>
 

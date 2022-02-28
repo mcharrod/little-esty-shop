@@ -19,7 +19,9 @@ RSpec.describe Customer, type: :model do
   end
 
   describe 'class methods' do
-    xit 'US20 - Top 5 Customers' do
+    it 'US20 - Top 5 Customers' do
+      # most to least : customer4, customer1, customer5, customer7, customer2
+
       # Customer 1 will have 4 successful transactions over 4 invoices
       customer1 = create(:customer)
       invoice1 = create(:invoice, customer_id: customer1.id)

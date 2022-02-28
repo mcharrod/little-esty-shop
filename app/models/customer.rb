@@ -7,6 +7,18 @@ class Customer < ApplicationRecord
 
 
   def self.top_five
-    binding.pry
+    # join all customers to transactions through invoices
+    all.joins(invoices: :transactions)
+    # only select the successful transactions
+    .where(['transactions.result = ?', 0])
+    # group by customer id
+    .group(:id)
+    # order by each customers transaction count, return 5 results.
+    .order('transactions.count desc').limit(5)
+  end
+
+
+  def transaction_count
+    self.transactions.where(result: 0).count
   end
 end
