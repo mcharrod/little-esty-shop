@@ -88,4 +88,35 @@ RSpec.describe Customer, type: :model do
       expect(Customer.top_five).to eq([customer4, customer1, customer5, customer7, customer2])
     end
   end
+
+  describe 'instance methods' do
+    it '#transaction_count' do
+      # fail customer has no successful transactions
+      fail_customer = create(:customer, first_name: "no successful transactions")
+      fail_invoice = create(:invoice, customer: fail_customer)
+      fail_transaction1 = create(:transaction, result: "failed", invoice: fail_invoice)
+      fail_transaction2 = create(:transaction, result: "failed", invoice: fail_invoice)
+      fail_transaction3 = create(:transaction, result: "failed", invoice: fail_invoice)
+
+      expect(fail_customer.transaction_count).to eq(0)
+
+      # success customer has 3 successful transactions
+      success_customer = create(:customer, first_name: "3 successful transactions")
+      success_invoice = create(:invoice, customer: success_customer)
+      success_transaction1 = create(:transaction, result: "success", invoice: success_invoice)
+      success_transaction2 = create(:transaction, result: "success", invoice: success_invoice)
+      success_transaction3 = create(:transaction, result: "success", invoice: success_invoice)
+
+      expect(success_customer.transaction_count).to eq(3)
+
+      # fail customer has 2 out of 3 successful transactions
+      partial_customer = create(:customer, first_name: "2 successful transactions")
+      partial_invoice = create(:invoice, customer: partial_customer)
+      partial_transaction1 = create(:transaction, result: "success", invoice: partial_invoice)
+      partial_transaction2 = create(:transaction, result: "success", invoice: partial_invoice)
+      partial_transaction3 = create(:transaction, result: "failed", invoice: partial_invoice)
+
+      expect(partial_customer.transaction_count).to eq(2)
+    end
+  end
 end
