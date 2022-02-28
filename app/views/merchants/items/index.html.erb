@@ -6,8 +6,7 @@
 <div id="top-five" class="left-div">
 <h4> Top five selling items</h4>
   <% @merchant.top_five.each do |item|%>
-    <p><%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}", method: :get %><br> Revenue Generated: <%=item.money_made%><br>
-    Best Selling Date: <%= item.best_day%></p><br>
+    <p><%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}", method: :get %><br> Revenue Generated: <%=item.money_made%><br><a>Best Selling Date: <%= item.best_day%></a></p><br>
   <%end%>
 </div>
 

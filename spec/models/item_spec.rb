@@ -73,7 +73,6 @@ RSpec.describe Item, type: :model do
       transaction3 = Transaction.create!(credit_card_number: 123456, result: 1, invoice_id: invoice3.id)
       transaction4 = Transaction.create!(credit_card_number: 123456, result: 1, invoice_id: invoice4.id)
       transaction5 = Transaction.create!(credit_card_number: 123456, result: 1, invoice_id: invoice5.id)
-
       expect(item1.best_day).to eq("Thursday, May 22, 2014")
       expect(item2.best_day).to eq("Tuesday, May 20, 2014")
       expect(item3.best_day).to eq("Monday, May 19, 2014")
