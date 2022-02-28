@@ -92,25 +92,21 @@ RSpec.describe 'merchant item index', type: :feature do
     fun = merchant1.items.create!(name: "FunPants", description: "Cha + 20", unit_price: 2000)
     fit = merchant1.items.create!(name: "FitPants", description: "Con + 20", unit_price: 150)
     veiny = merchant1.items.create!(name: "VeinyShorts", description: "Str + 20", unit_price: 1400)
-    item5 = merchant1.items.create!(name: "SpringSocks", description: "DX + 20", unit_price: 375)
+    socks = merchant1.items.create!(name: "SpringSocks", description: "DX + 20", unit_price: 375)
     under = merchant1.items.create!(name: "UnderRoos", description: "SNUG!", unit_price: 25)
     sun = merchant1.items.create!(name: "SunStoppers", description: "Eclipse ready!", unit_price: 50)
+
     customer1 = Customer.create!(first_name: "Marky", last_name: "Mark" )
     customer2 = Customer.create!(first_name: "Larky", last_name: "Lark" )
     customer3 = Customer.create!(first_name: "Sparky", last_name: "Spark" )
     customer4 = Customer.create!(first_name: "Farky", last_name: "Fark" )
+
     invoice1 = customer1.invoices.create!(status: 2, created_at: "2014-05-22")
     invoice2 = customer2.invoices.create!(status: 2, created_at: "2014-05-21")
     invoice3 = customer3.invoices.create!(status: 2, created_at: "2014-05-20")
     invoice4 = customer4.invoices.create!(status: 2, created_at: "2014-05-22")
     invoice5 = customer4.invoices.create!(status: 2, created_at: "2014-05-19")
 
-
-    invoice1 = customer1.invoices.create!(status: 0)
-    invoice2 = customer2.invoices.create!(status: 0)
-    invoice3 = customer3.invoices.create!(status: 0)
-    invoice4 = customer4.invoices.create!(status: 0)
-    invoice5 = customer4.invoices.create!(status: 0)
 
     # fun pants has 4500 revenue (500 x 5) + 1000 + 1000
     invoice_item1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: fun.id, quantity: 5, unit_price: 500, status: 0)
