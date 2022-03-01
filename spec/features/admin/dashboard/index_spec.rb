@@ -77,6 +77,7 @@ describe 'Admin Dashboard Index Page' do
 
     expect(page).to have_content("Invoice Number: #{invoice1.id} - created Tuesday, March 06, 2012")
   end
+
   it "lists the invoices that are incomplete " do
     visit '/admin'
 
@@ -93,5 +94,91 @@ describe 'Admin Dashboard Index Page' do
     click_link("Invoice ID: #{@invoice1.id}")
     expect(current_path).to eq("/admin/invoices/#{@invoice1.id}")
   end
+end
 
+RSpec.describe "Admin dashboard" do
+
+  it "US20 - Top 5 Customers" do
+    # highest to lowest successful transactions: 4(5), 1(4), 5(3), 7(2), 2(1).
+
+    # Customer 8 will have no transactions or invoices
+    customer8 = create(:customer)
+
+    # Customer 3 will have 1 failed transaction over 1 invoice
+    customer3 = create(:customer)
+    invoice1 = create(:invoice, customer_id: customer3.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+
+    # Customer 6 will have 7 failed transactions on 1 invoice
+    customer6 = create(:customer, first_name: "DO NOT SHOW ME GOD")
+    invoice1 = create(:invoice, customer_id: customer6.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+
+    # Customer 2 will have 1 successful transactions on 1 invoice
+    customer2 = create(:customer, first_name: "fifth place")
+    invoice1 = create(:invoice, customer_id: customer2.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+
+    # Customer 7 will have 2 successful transactions on 2 invoices
+    customer7 = create(:customer, first_name: "fourth place")
+    invoice1 = create(:invoice, customer_id: customer7.id)
+    invoice2 = create(:invoice, customer_id: customer7.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice2.id)
+
+    # Customer 5 will have 3 successful transactions over 1 invoice
+    customer5 = create(:customer, first_name: "third place")
+    invoice1 = create(:invoice, customer_id: customer5.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+
+    # Customer 1 will have 4 successful transactions over 4 invoices
+    customer1 = create(:customer, first_name: "second place")
+    invoice1 = create(:invoice, customer_id: customer1.id)
+    invoice2 = create(:invoice, customer_id: customer1.id)
+    invoice3 = create(:invoice, customer_id: customer1.id)
+    invoice4 = create(:invoice, customer_id: customer1.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice2.id)
+    create(:transaction, result: 0, invoice_id: invoice3.id)
+    create(:transaction, result: 0, invoice_id: invoice4.id)
+
+    # Customer 4 will have 5 successful and 2 failed transactions over 3 invoices
+    customer4 = create(:customer, first_name: "winner winner chicken dinner")
+    invoice1 = create(:invoice, customer_id: customer4.id)
+    invoice2 = create(:invoice, customer_id: customer4.id)
+    invoice3 = create(:invoice, customer_id: customer4.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice2.id)
+    create(:transaction, result: 0, invoice_id: invoice3.id)
+    create(:transaction, result: 0, invoice_id: invoice1.id)
+    create(:transaction, result: 0, invoice_id: invoice2.id)
+    create(:transaction, result: 1, invoice_id: invoice3.id)
+    create(:transaction, result: 1, invoice_id: invoice1.id)
+
+    visit '/admin'
+
+    # highest to lowest successful transactions: 4(5), 1(4), 5(3), 7(2), 2(1).
+
+    # Finally we get to test something!
+    within("#top-customers") do
+      expect(page).to have_content("Top 5 Customers")
+      expect(page).to have_content("1. #{customer4.first_name}: successful transactions: 5")
+      expect(page).to have_content("2. #{customer1.first_name}: successful transactions: 4")
+      expect(page).to have_content("3. #{customer5.first_name}: successful transactions: 3")
+      expect(page).to have_content("4. #{customer7.first_name}: successful transactions: 2")
+      expect(page).to have_content("5. #{customer2.first_name}: successful transactions: 1")
+
+      expect(page).to_not have_content("#{customer3.first_name}")
+      expect(page).to_not have_content("#{customer6.first_name}")
+      expect(page).to_not have_content("#{customer8.first_name}")
+    end
+  end
 end
