@@ -17,4 +17,17 @@ class Item < ApplicationRecord
   def self.disabled
     where(status: 0)
   end
+
+  def money_made
+    invoice_items.sum('quantity * unit_price')
+  end
+
+  def best_day
+    invoices.joins(:invoice_items, :transactions)
+      .where('transactions.result = 0')
+      .select('invoices.*, SUM(invoice_items.unit_price * invoice_items.quantity)as revenue')
+      .group(:id)
+      .order("revenue DESC")
+      .first&.created_at&.strftime("%A, %B %d, %Y")
+  end
 end

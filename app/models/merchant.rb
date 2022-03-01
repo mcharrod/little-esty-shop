@@ -11,8 +11,15 @@ class Merchant < ApplicationRecord
   enum status: { "disabled" => 0, "enabled" => 1 }
 
   def ready_items
-    # grab all the invoices unless status is shipped
-    invoice_items.where.not(status: 2)
+    # order the invoices by created at date, old to new
+    # then remove all the items where they are already shipped
+
+     invoice_items.where.not(status: 2)
+     .joins(:invoice).order("invoices.created_at")
+
+    # invoices.order(:created_at)
+    # .joins(:invoice_items)
+    # .where.not(invoice_items: { status: 2 })
   end
 
   def ordered_items
@@ -25,5 +32,23 @@ class Merchant < ApplicationRecord
 
   def self.disabled
     where(status: 0)
+  end
+
+  def top_five
+    items.joins(invoices: :transactions)
+    .where('transactions.result = 0')
+    .select("items.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue")
+    .group(:id)
+    .order("revenue DESC")
+    .limit(5)
+  end
+
+  def self.top_merchant
+    joins(invoices: [invoice_items: :transactions])
+    .where('transactions.result = 0')
+    .select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue")
+    .group(:id)
+    .order("revenue DESC")
+    .limit(5)
   end
 end
