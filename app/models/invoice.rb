@@ -18,9 +18,7 @@ class Invoice < ApplicationRecord
   end
 
   def self.incomplete
-
     # Invoice.where.not(status: 1).joins(:invoice_items).where.not(status: 2).group("invoices.id")
     where(status: 0).order(:created_at)
-
   end
 end
