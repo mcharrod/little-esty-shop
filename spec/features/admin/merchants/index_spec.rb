@@ -39,14 +39,18 @@ RSpec.describe 'admin merchant index page', type: :feature do
   end
 
   it "lists the top five merchants" do
-    merchant1 = Merchant.create!(name: "The Tornado")
-    smart = merchant1.items.create!(name: "SmartPants", description: "IQ + 20", unit_price: 120)
+    merchant = Merchant.create!(name: "The Kornado")
+    merchant1 = Merchant.create!(name: "The Tornado", status: 1)
+    merchant3 = Merchant.create!(name: "The Mornado", status: 1)
+    merchant2 = Merchant.create!(name: "The Vornado", status: 0)
+    merchant4 = Merchant.create!(name: "The Lornado", status: 0)
+    smart = merchant.items.create!(name: "SmartPants", description: "IQ + 20", unit_price: 120)
     fun = merchant1.items.create!(name: "FunPants", description: "Cha + 20", unit_price: 2000)
-    fit = merchant1.items.create!(name: "FitPants", description: "Con + 20", unit_price: 150)
-    veiny = merchant1.items.create!(name: "VeinyShorts", description: "Str + 20", unit_price: 1400)
-    socks = merchant1.items.create!(name: "SpringSocks", description: "DX + 20", unit_price: 375)
-    under = merchant1.items.create!(name: "UnderRoos", description: "SNUG!", unit_price: 25)
-    sun = merchant1.items.create!(name: "SunStoppers", description: "Eclipse ready!", unit_price: 50)
+    fit = merchant2.items.create!(name: "FitPants", description: "Con + 20", unit_price: 150)
+    veiny = merchant4.items.create!(name: "VeinyShorts", description: "Str + 20", unit_price: 1400)
+    socks = merchant3.items.create!(name: "SpringSocks", description: "DX + 20", unit_price: 375)
+    under = merchant2.items.create!(name: "UnderRoos", description: "SNUG!", unit_price: 25)
+    sun = merchant3.items.create!(name: "SunStoppers", description: "Eclipse ready!", unit_price: 50)
 
     customer1 = Customer.create!(first_name: "Marky", last_name: "Mark" )
     customer2 = Customer.create!(first_name: "Larky", last_name: "Lark" )
@@ -87,7 +91,11 @@ RSpec.describe 'admin merchant index page', type: :feature do
     transaction4 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice4.id)
     transaction5 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice5.id)
     visit '/admin/merchants'
-    save_and_open_page
-    
+    within("#top-5") do
+      expect(page).to have_content("CA$H earned: 12600")
+      expect("12600").to appear_before("12400")
+      expect("12400").to appear_before("11500")
+      expect("1400").to appear_before("1075")
+    end
   end
 end
