@@ -101,11 +101,12 @@ RSpec.describe 'merchant item index', type: :feature do
     customer3 = Customer.create!(first_name: "Sparky", last_name: "Spark" )
     customer4 = Customer.create!(first_name: "Farky", last_name: "Fark" )
 
-    invoice1 = customer1.invoices.create!(status: 0)
-    invoice2 = customer2.invoices.create!(status: 0)
-    invoice3 = customer3.invoices.create!(status: 0)
-    invoice4 = customer4.invoices.create!(status: 0)
-    invoice5 = customer4.invoices.create!(status: 0)
+    invoice1 = customer1.invoices.create!(status: 2, created_at: "2014-05-22")
+    invoice2 = customer2.invoices.create!(status: 2, created_at: "2014-05-21")
+    invoice3 = customer3.invoices.create!(status: 2, created_at: "2014-05-20")
+    invoice4 = customer4.invoices.create!(status: 2, created_at: "2014-05-22")
+    invoice5 = customer4.invoices.create!(status: 2, created_at: "2014-05-19")
+
 
     # fun pants has 4500 revenue (500 x 5) + 1000 + 1000
     invoice_item1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: fun.id, quantity: 5, unit_price: 500, status: 0)
