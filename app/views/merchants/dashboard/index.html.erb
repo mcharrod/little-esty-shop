@@ -5,19 +5,12 @@
 
 
 <% if @merchant.invoice_items.present? %>
-
   <h2>Items ready to ship</h2>
-
     <% @merchant.ready_items.each do |invoice_item| %>
-
       <div id="invoice_item-<%= invoice_item.id %>">
-
-        <%= "Item name: #{invoice_item.item.name}" %>
-
-        <p><%= "Invoice Number: #{invoice_item.invoice.id} - created #{invoice_item.invoice.format_date}" %></p>
-
-        <%= link_to "View this invoice", "/merchants/#{@merchant.id}/invoices/#{invoice_item.invoice.id}" %><br><br>
-
+        <%= invoice_item.item.name %>
+        <%= link_to "View invoice #{invoice_item.invoice.id}",
+        "/merchants/#{@merchant.id}/invoices/#{invoice_item.invoice.id}" %>
       </div>
     <% end  %>
 <% end %>

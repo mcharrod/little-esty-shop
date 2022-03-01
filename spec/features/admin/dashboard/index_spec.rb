@@ -77,7 +77,6 @@ describe 'Admin Dashboard Index Page' do
 
     expect(page).to have_content("Invoice Number: #{invoice1.id} - created Tuesday, March 06, 2012")
   end
-
   it "lists the invoices that are incomplete " do
     visit '/admin'
 

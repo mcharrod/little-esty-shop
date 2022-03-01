@@ -61,7 +61,7 @@ describe "Merchant Dashboard", type: :feature do
     visit "/merchants/#{merchant2.id}"
 
     within "#invoice_item-#{ii2.id}" do
-      click_link "View this invoice"
+      click_link "View invoice #{ii2.invoice.id}"
     end
 
     expect(current_path).to eq("/merchants/#{merchant2.id}/invoices/#{ii2.invoice.id}")
@@ -72,40 +72,12 @@ describe "Merchant Dashboard", type: :feature do
     visit "/merchants/#{merchant2.id}"
 
     within "#invoice_item-#{ii3.id}" do
-      click_link "View this invoice"
+      click_link "View invoice #{ii3.invoice.id}"
     end
 
     expect(current_path).to eq("/merchants/#{merchant2.id}/invoices/#{ii3.invoice.id}")
 
     # sad path
     expect(current_path).to_not eq("/merchants/#{merchant2.id}/invoices/#{ii2.invoice.id}")
-  end
-
-
-  it 'orders ready items by oldest first and displays that date' do
-    item1 = create(:item, merchant: @merchant1)
-
-    # oldest to newest is 3, 2, 1
-    invoice1 = create(:invoice, created_at: "Thu, 03 Feb 2022 01:13:46 UTC +00:00")
-    invoice2 = create(:invoice, created_at: "Wed, 02 Feb 2022 01:13:46 UTC +00:00")
-    invoice3 = create(:invoice, created_at: "Tue, 01 Feb 2022 01:13:46 UTC +00:00")
-
-    no_show_invoice = create(:invoice)
-
-    ii1 = create(:invoice_item, item: item1, invoice: invoice1)
-    ii2 = create(:invoice_item, item: item1, invoice: invoice2)
-    ii3 = create(:invoice_item, item: item1, invoice: invoice3)
-
-    dont_display = create(:invoice_item, item: item1, status: "shipped", invoice: no_show_invoice)
-
-    oldest = "Invoice Number: #{invoice3.id} - created Tuesday, February 01, 2022"
-    middle = "Invoice Number: #{invoice2.id} - created Wednesday, February 02, 2022"
-    newest = "Invoice Number: #{invoice1.id} - created Thursday, February 03, 2022"
-
-    visit "/merchants/#{@merchant1.id}"
-
-    expect(oldest).to appear_before(middle)
-    expect(middle).to appear_before(newest)
-    expect(page).not_to have_content(no_show_invoice.id)
   end
 end
