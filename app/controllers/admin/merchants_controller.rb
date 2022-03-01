@@ -45,11 +45,12 @@ class Admin::MerchantsController < ApplicationController
   private
 
     def merchant_params
-      param_hash = {}
-
-      param_hash[:name] = params[:name] unless params[:name] == "" || params[:name] == nil
-      param_hash[:status] = params[:status] unless params[:status] == "" || params[:status] == nil
-
-      param_hash
+      # param_hash = {}
+      #
+      # param_hash[:name] = params[:name] unless params[:name] == "" || params[:name] == nil
+      # param_hash[:status] = params[:status] unless params[:status] == "" || params[:status] == nil
+      #
+      # param_hash
+      params.permit(:name, :status)
     end
 end

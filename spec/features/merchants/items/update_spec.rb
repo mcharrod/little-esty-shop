@@ -64,11 +64,11 @@ RSpec.describe 'Merchant item update', type: :feature do
     click_button 'Update item'
 
     expect(current_path).to eq("/merchants/#{@merchant.id}/items/#{@item1.id}/edit")
+    expect(page).to have_content("Error: Description can't be blank")
 
     @item1.reload
     expect(@item1.name).to eq("old name")
     expect(@item1.description).to eq("old description")
-    expect(page).to have_content("Error: Description can't be blank")
   end
 
 end
