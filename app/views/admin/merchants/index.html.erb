@@ -2,7 +2,15 @@
   <br>
 <h1>All Merchants</h1>
   <div id="new-link-top"><%=button_to "Add New Merchant", "/admin/merchants/new", method: :get %></div>
-  <div class="merchant-div">
+  <div class="merchant-adm">
+    <div class="left-div">
+      <ol>
+        <h4>Top five merchants</h4>
+        <% @merchants.top_merchant.each do |merchant|%>
+        <li>  Name: <%= button_to "#{merchant.name} show", "/admin/merchants/#{merchant.id}", method: :get %> CA$H earned: <%=merchant.revenue%></li>
+        <%end%>
+      </ol>
+    </div>
 <ul>
 <div id="enabled">
 <h4>Active Merchants</h4>
@@ -23,8 +31,8 @@
 
 <br>
 <div id="disabled" class='right-div'>
-  <h4>Inactive Merchants</h4>
 <ul>
+  <h4>Inactive Merchants</h4>
 <% @merchants.disabled.each do |merchant| %>
   <li id="merchant-<%= merchant.id %>">Name: <%= link_to "#{merchant.name}", "/admin/merchants/#{merchant.id}", method: :get %> <br>Current status: <%= merchant.status %><br>
   Merchant dashbord :<%= button_to "#{merchant.name} Dashboard", "/merchants/#{merchant.id}", method: :get %>
