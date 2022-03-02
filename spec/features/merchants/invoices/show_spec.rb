@@ -11,7 +11,7 @@ RSpec.describe 'Shows 1 invoice, and all its attributes', type: :feature do
     @invoice2 = @customer2.invoices.create!(status: 1)
     @invoice3 = @customer2.invoices.create!(status: 1)
     @invoice_item1 = InvoiceItem.create!(invoice_id: @invoice1.id, item_id: @item1.id, quantity: 2, unit_price: 125, status: 1)
-    
+
   end
 
   it "links from the merchants/invoices index to merch/inv/show" do
@@ -52,7 +52,7 @@ RSpec.describe 'Shows 1 invoice, and all its attributes', type: :feature do
 
   it "can update status via dropdown menu's" do
     visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
-    
+
     within "##{@invoice_item1.item_id}" do
       select'shipped', from: :status
       click_button("Update Item Status")
@@ -87,6 +87,6 @@ RSpec.describe 'Shows 1 invoice, and all its attributes', type: :feature do
   it " test for the total amount of the invoice." do
     visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
 
-    expect(page).to have_content("Total amount from Marky's invoice: $125")
+    expect(page).to have_content("Total amount due on Marky's invoice: $125")
   end
 end

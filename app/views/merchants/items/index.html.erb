@@ -2,12 +2,14 @@
 <br><h1><%= @merchant.name %> items</h1>
 <%= button_to "Create item", "/merchants/#{@merchant.id}/items/new", method: :get%><br>
 
-<div class="merchant-div">
-<div id="top-five" class="left-div">
+<div class="merchant-adm">
+<div id="top-five" class="left-div2">
+  <ol>
 <h4> Top five selling items</h4>
   <% @merchant.top_five.each do |item|%>
-    <p><%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}", method: :get %><br> Revenue Generated: <%=item.money_made%><br><a>Best Selling Date: <%= item.best_day%></a></p><br>
+    <li><%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}", method: :get %><br> Revenue Generated: <%=item.money_made%><br><Best Date: <%= item.best_day%></li><br>
   <%end%>
+  </ol>
 </div>
 
   <ul>
@@ -29,13 +31,12 @@
 </div>
 </ul>
 
-<div id="disabled" class='merch-right-div'>
-  <ul>
+<!-- <div id="disabled" class='merch-right-div'> -->
+  <ul id="disabled">
     <h4>Not in inventory</h4>
 <%@merchant.ordered_items.disabled.each do |item| %>
-  <div id="item-<%= item.id %>" class='merch-right-div'>
+  <div id="item-<%= item.id %>">
       <li>Name: <%= item.name %><br> Status: <%= item.status %></li>
-
     <%= form_with url: "/merchants/#{@merchant.id}/items/#{item.id}?mode=button", method: :patch, local: true do |form| %>
       <% statusing = [ "enabled", "enable" ] %>
       <% statusing = [ "disabled", "disable" ] if item.status == "enabled" %>
@@ -46,6 +47,6 @@
   </div>
 <% end  %>
 <ul>
-</div>
+<!-- </div> -->
 </div>
 </div>
