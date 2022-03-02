@@ -3,10 +3,18 @@
 <ul>
   <div>
     <h2><%= @merchant.name %> Store</h2>
-<div>  <%= link_to "View store items", "/merchants/#{@merchant.id}/items" %><br><%= link_to "View invoices", "/merchants/#{@merchant.id}/invoices" %></div>
-
-Potentially more merchant statistics in this column
+<div>  <%= link_to "View store items", "/merchants/#{@merchant.id}/items" %>
+  <br><%= link_to "View invoices", "/merchants/#{@merchant.id}/invoices" %></div>
 </ul>
+
+<div>
+  <h2>Favorite Customers</h2>
+    <ol>
+    <% @merchant.favorite_customers.each_with_index do |customer, index| %>
+    <li id="favorite-customer-<%= index + 1 %>"><%= customer.first_name %> <%= customer.last_name %>: <%= customer.transaction_count %> successful transactions</li>
+    <% end %>
+    </ol>
+</div>
 
 <div class="center-col2">
 <h2>Items ready to ship</h2>
