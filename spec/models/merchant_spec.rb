@@ -214,7 +214,7 @@ RSpec.describe Merchant, type: :model do
     Transaction.create!(credit_card_number: 3645, result: 0, invoice_id: invoice1.id)
     Transaction.create!(credit_card_number: 345634566, result: 0, invoice_id: invoice1.id)
     Transaction.create!(credit_card_number: 65433333, result: 0, invoice_id: invoice1.id)
-    Transaction.create!(credit_card_number: 09872334, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 9872334, result: 0, invoice_id: invoice1.id)
     ## 8 Transactions on 5 invoices, but 4 transactions fail /4 total/ The #3 favorite
     customer5 = Customer.create!(first_name: "Marky", last_name: "Mark" )
     invoice1 = customer5.invoices.create!(status: 0)
