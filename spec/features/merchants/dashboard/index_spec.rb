@@ -98,12 +98,11 @@ describe "Merchant Dashboard", type: :feature do
 
     dont_display = create(:invoice_item, item: item1, status: "shipped", invoice: no_show_invoice)
 
-    oldest = "Invoice Number: #{invoice3.id} - created Tuesday, February 01, 2022"
-    middle = "Invoice Number: #{invoice2.id} - created Wednesday, February 02, 2022"
-    newest = "Invoice Number: #{invoice1.id} - created Thursday, February 03, 2022"
+    oldest = "Invoice Number: #{invoice3.id}"
+    middle = "Invoice Number: #{invoice2.id}"
+    newest = "Invoice Number: #{invoice1.id}"
 
     visit "/merchants/#{@merchant1.id}"
-
     expect(oldest).to appear_before(middle)
     expect(middle).to appear_before(newest)
     expect(page).not_to have_content(no_show_invoice.id)

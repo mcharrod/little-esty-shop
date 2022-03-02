@@ -1,7 +1,8 @@
-
-    <h1> Invoice info </h1>
-
-    <ul>
+<div class="container text-center">
+  <h1>Customer order page </h1>
+<div class=merchant-adm>
+  <ul>
+    <h3> Invoice info </h3>
       <li>Customer name: <%=@invoice.customer.first_name%> <%=@invoice.customer.last_name%></li>
       <li>Customer ID: <%=@invoice.customer_id%></li>
       <li>Invoice Created: <%=@invoice.created_at.strftime("%A, %B, %d, %Y")%></li>
@@ -13,18 +14,16 @@
       <%= form.submit "Update Invoice Status" %>
       <%end%></div><br>
     </ul>
-
-    <h3> Material items for a material girl </h3>
     <ul>
+    <h3> Ordered items </h3>
       <%@invoice.invoice_items.each do |item| %>
         <p><li>Item id: <%=item.id%></li>
       <li>Item name: <%= item.item.name %></li>
       <li>Amount ordered: <%= item.quantity %></li>
       <li>Unit cost: <%= item.unit_price %></li>
       <li>Item status: <%= item.status %></li></p>
-
       <%end%>
     </ul>
-
-  <h3> Total amount from <%="#{@invoice.customer.first_name}"%>'s invoice: $<%= "#{@invoice.total_revenue}"%>
-
+  <h3> Bill <%="#{@invoice.customer.first_name}"%><br> $<%= "#{@invoice.total_revenue}"%>
+</div>
+</div>
