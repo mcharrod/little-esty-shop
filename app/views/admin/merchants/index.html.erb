@@ -1,13 +1,16 @@
 <div class="container text-center">
   <br>
 <h1>All Merchants</h1>
-  <div id="new-link-top"><%=button_to "Add New Merchant", "/admin/merchants/new", method: :get %></div>
+  <div id="new-link-top"><%= button_to "Add New Merchant", "/admin/merchants/new", method: :get %></div>
   <div class="merchant-adm">
     <div class="left-div">
       <ol>
         <h4>Top five merchants</h4>
-        <% @merchants.top_merchant.each do |merchant|%>
-        <li>  Name: <%= button_to "#{merchant.name} show", "/admin/merchants/#{merchant.id}", method: :get %> CA$H earned: <%=merchant.revenue%></li>
+        <% @merchants.top_merchant.each.with_index do |merchant, index|%>
+          <li id="top-<%= index + 1 %>-of-5">
+          Name: <%= button_to "#{merchant.name} show", "/admin/merchants/#{merchant.id}", method: :get %>
+          <br>CA$H earned: <%=merchant.revenue%>
+          <br>Best day: <%= merchant.best_day %></li>
         <%end%>
       </ol>
     </div>
