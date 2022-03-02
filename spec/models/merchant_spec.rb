@@ -31,6 +31,16 @@ RSpec.describe Merchant, type: :model do
     expect(merchant1.ready_items).to eq([ii2, ii3])
   end
 
+  it '#ordered_items' do
+    merchant = create(:merchant)
+
+    item1 = create(:item, merchant: merchant, name: "AAAA")
+    item2 = create(:item, merchant: merchant, name: "BBBB")
+    item3 = create(:item, merchant: merchant, name: "CCCC")
+
+    expect(merchant.ordered_items).to eq([item1, item2, item3])
+  end
+
   it "lists only enabled merchants" do
     @merchant1 = Merchant.create!(name: "The Tornado", status: 1)
     @merchant3 = Merchant.create!(name: "The Mornado", status: 1)
