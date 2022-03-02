@@ -65,17 +65,19 @@ RSpec.describe 'Updates an existing merchant:', type: :feature do
 
   it 'sad path: no value entered for name' do
 
-    merchant = create(:merchant, status: "disabled")
-    name = merchant.name
-    status = merchant.status
+    merchant = create(:merchant, name: "old name", status: "disabled")
 
     visit "/admin/merchants/#{merchant.id}/edit"
 
+    fill_in "Name", with: ''
     click_button("Update Merchant")
 
-    expect(current_path).to eq("/admin/merchants/#{merchant.id}")
+    expect(current_path).to eq("/admin/merchants/#{merchant.id}/edit")
+    expect(page).to have_content("Error: Name can't be blank")
 
-    expect(page).to have_content(name)
-    expect(page).to have_content(status)
+    merchant.reload
+
+    expect(merchant.name).to eq("old name")
+    expect(merchant.status).to eq("disabled")
   end
 end
