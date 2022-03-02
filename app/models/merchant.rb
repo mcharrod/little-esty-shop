@@ -52,6 +52,7 @@ class Merchant < ApplicationRecord
     .group('customers.id')
     .order('transaction_count desc')
     .limit(5)
+  end
 
   def best_day
     items.joins(invoices: :transactions)
