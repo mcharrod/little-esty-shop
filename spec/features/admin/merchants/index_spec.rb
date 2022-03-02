@@ -69,7 +69,7 @@ RSpec.describe 'admin merchant index page', type: :feature do
     InvoiceItem.create!(invoice_id: invoice2.id, item_id: item1.id, quantity: 3, unit_price: 1200, status: 1)
     Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice2.id)
 
-## Total Revenue: 17402 / rank: 3
+## Total Revenue: 18802/ rank: 3
     merchant3 = Merchant.create!(name: "The Qornado")
     item1 = merchant3.items.create!(name: "SmartPants", description: "IQ + 20", unit_price: 120)
     customer1 = Customer.create!(first_name: "Marky", last_name: "Mark" )
@@ -116,7 +116,6 @@ RSpec.describe 'admin merchant index page', type: :feature do
 
 
     visit '/admin/merchants'
-
     within("#top-1-of-5") do
       expect(page).to have_button("#{merchant4.name}")
       expect(page).to have_content("CA$H earned: 33520")
@@ -124,14 +123,14 @@ RSpec.describe 'admin merchant index page', type: :feature do
     end
 
     within("#top-2-of-5") do
-      expect(page).to have_button("#{merchant5.name}")
-      expect(page).to have_content("CA$H earned: 18290")
+      expect(page).to have_button("#{merchant3.name}")
+      expect(page).to have_content("CA$H earned: 18802")
       expect(page).to have_content("Best day: Saturday, March 10, 2012")
     end
 
     within("#top-3-of-5") do
-      expect(page).to have_button("#{merchant3.name}")
-      expect(page).to have_content("CA$H earned: 17402")
+      expect(page).to have_button("#{merchant5.name}")
+      expect(page).to have_content("CA$H earned: 18290")
       expect(page).to have_content("Best day: Saturday, March 10, 2012")
     end
 
@@ -149,63 +148,91 @@ RSpec.describe 'admin merchant index page', type: :feature do
   end
 
   it "lists the top five merchants" do
-    merchant = Merchant.create!(name: "The Kornado")
-    merchant1 = Merchant.create!(name: "The Tornado", status: 1)
-    merchant3 = Merchant.create!(name: "The Mornado", status: 1)
-    merchant2 = Merchant.create!(name: "The Vornado", status: 0)
-    merchant4 = Merchant.create!(name: "The Lornado", status: 0)
-    smart = merchant.items.create!(name: "SmartPants", description: "IQ + 20", unit_price: 120)
-    fun = merchant1.items.create!(name: "FunPants", description: "Cha + 20", unit_price: 2000)
-    fit = merchant2.items.create!(name: "FitPants", description: "Con + 20", unit_price: 150)
-    veiny = merchant4.items.create!(name: "VeinyShorts", description: "Str + 20", unit_price: 1400)
-    socks = merchant3.items.create!(name: "SpringSocks", description: "DX + 20", unit_price: 375)
-    under = merchant2.items.create!(name: "UnderRoos", description: "SNUG!", unit_price: 25)
-    sun = merchant3.items.create!(name: "SunStoppers", description: "Eclipse ready!", unit_price: 50)
+    ## Total Revenue: 8690 / rank: 4
+        merchant1 = Merchant.create!(name: "The Tornado")
+        item1 = merchant1.items.create!(name: "SmartPants", description: "IQ + 20", unit_price: 120)
+        customer1 = Customer.create!(first_name: "Marky", last_name: "Mark" )
+        ## Day 1 (Friday) / Invoice 1 Revenue = 8450 BEST DAY!!!!!!!!
+        invoice1 = customer1.invoices.create!(status: 0, created_at: "2012-03-09 20:54:52")
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 2, unit_price: 125, status: 0)
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 3, unit_price: 1400, status: 2)
+        Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+        ## Day 2 (Saturday) / Invoice 2 Revenue = 240
+        invoice2 = customer1.invoices.create!(status: 0, created_at: "2012-03-10 20:54:52")
+        InvoiceItem.create!(invoice_id: invoice2.id, item_id: item1.id, quantity: 2, unit_price: 120, status: 1)
+        Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice2.id)
 
-    customer1 = Customer.create!(first_name: "Marky", last_name: "Mark" )
-    customer2 = Customer.create!(first_name: "Larky", last_name: "Lark" )
-    customer3 = Customer.create!(first_name: "Sparky", last_name: "Spark" )
-    customer4 = Customer.create!(first_name: "Farky", last_name: "Fark" )
+    ## Total Revenue: 4092 / rank: 5
+        merchant2 = Merchant.create!(name: "The Bornado")
+        item1 = merchant2.items.create!(name: "SmartPants", description: "IQ + 20", unit_price: 120)
+        customer1 = Customer.create!(first_name: "Marky", last_name: "Mark" )
+        ## Day 1 (Friday) / Invoice 1 Revenue = 492
+        invoice1 = customer1.invoices.create!(status: 0, created_at: "2012-03-09 20:54:52")
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 1, unit_price: 200, status: 0)
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 1, unit_price: 12, status: 0)
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 2, unit_price: 140, status: 2)
+        Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+        ## Day 2 (Saturday) / Invoice 2 Revenue = 3600 BEST DAY!!!!!!!!
+        invoice2 = customer1.invoices.create!(status: 0, created_at: "2012-03-10 20:54:52")
+        InvoiceItem.create!(invoice_id: invoice2.id, item_id: item1.id, quantity: 3, unit_price: 1200, status: 1)
+        Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice2.id)
 
-    invoice1 = customer1.invoices.create!(status: 2, created_at: "2014-05-22")
-    invoice2 = customer2.invoices.create!(status: 2, created_at: "2014-05-21")
-    invoice3 = customer3.invoices.create!(status: 2, created_at: "2014-05-20")
-    invoice4 = customer4.invoices.create!(status: 2, created_at: "2014-05-22")
-    invoice5 = customer4.invoices.create!(status: 2, created_at: "2014-05-19")
+    ## Total Revenue: 18802/ rank: 3
+        merchant3 = Merchant.create!(name: "The Qornado")
+        item1 = merchant3.items.create!(name: "SmartPants", description: "IQ + 20", unit_price: 120)
+        customer1 = Customer.create!(first_name: "Marky", last_name: "Mark" )
+        ## Day 1 (Friday) / Invoice 1 Revenue = 1802
+        invoice1 = customer1.invoices.create!(status: 0, created_at: "2012-03-09 20:54:52")
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 1, unit_price: 300, status: 0)
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 1, unit_price: 102, status: 0)
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 2, unit_price: 1400, status: 2)
+        Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+        ## Day 2 (Saturday) / Invoice 2 Revenue = 15600 BEST DAY!!!!!!!!
+        invoice2 = customer1.invoices.create!(status: 0, created_at: "2012-03-10 20:54:52")
+        InvoiceItem.create!(invoice_id: invoice2.id, item_id: item1.id, quantity: 3, unit_price: 5200, status: 1)
+        Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice2.id)
 
+    ## Total Revenue: 33520 / rank: 1
+        merchant4 = Merchant.create!(name: "The Stornado")
+        item1 = merchant4.items.create!(name: "SmartPants", description: "IQ + 20", unit_price: 120)
+        customer1 = Customer.create!(first_name: "Marky", last_name: "Mark" )
+        ## Day 1 (Friday) / Invoice 1 Revenue = 32020 BEST DAY!!!!!!!!!!!!!
+        invoice1 = customer1.invoices.create!(status: 0, created_at: "2012-03-09 20:54:52")
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 1, unit_price: 3000, status: 0)
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 1, unit_price: 1020, status: 0)
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 2, unit_price: 14000, status: 2)
+        Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+        ## Day 2 (Saturday) / Invoice 2 Revenue = 1500
+        invoice2 = customer1.invoices.create!(status: 0, created_at: "2012-03-10 20:54:52")
+        InvoiceItem.create!(invoice_id: invoice2.id, item_id: item1.id, quantity: 3, unit_price: 500, status: 1)
+        Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice2.id)
 
-    # fun pants has 4500 revenue (500 x 5) + 1000 + 1000
-    invoice_item1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: fun.id, quantity: 5, unit_price: 500, status: 0)
-    invoice_item5 = InvoiceItem.create!(invoice_id: invoice3.id, item_id: fun.id, quantity: 1, unit_price: 1000, status: 1)
-    invoice_item8 = InvoiceItem.create!(invoice_id: invoice5.id, item_id: fun.id, quantity: 1, unit_price: 1000, status: 1)
-
-    # smart pants has 4400 revenue (2000 x 2) + (100 x 4)
-    invoice_item2 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: smart.id, quantity: 2, unit_price: 2000, status: 0)
-    invoice_item4 = InvoiceItem.create!(invoice_id: invoice2.id, item_id: smart.id, quantity: 4, unit_price: 100, status: 1)
-
-    # veiny shorts has 1400 revenue
-    invoice_item9 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: veiny.id, quantity: 3, unit_price: 1400, status: 2)
-
-    # sun stoppers has 700 revenue (100 x 7)
-    invoice_item7 = InvoiceItem.create!(invoice_id: invoice3.id, item_id: sun.id, quantity: 7, unit_price: 100, status: 2)
-
-    # fit pants has 500 revenue (100 x 5)
-    invoice_item3 = InvoiceItem.create!(invoice_id: invoice5.id, item_id: fit.id, quantity: 5, unit_price: 100, status: 0)
-
-    # under roos has 75 revenue (25 x 3)
-    invoice_item6 = InvoiceItem.create!(invoice_id: invoice4.id, item_id: under.id, quantity: 3, unit_price: 25, status: 2)
-
-    transaction1 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
-    transaction2 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice2.id)
-    transaction3 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice3.id)
-    transaction4 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice4.id)
-    transaction5 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice5.id)
+    ## Total Revenue: 18290 / rank: 2
+        merchant5 = Merchant.create!(name: "The Mornado")
+        item1 = merchant5.items.create!(name: "SmartPants", description: "IQ + 20", unit_price: 120)
+        customer1 = Customer.create!(first_name: "Marky", last_name: "Mark" )
+        ## Day 1 (Friday) / Invoice 1 Revenue = 3290
+        invoice1 = customer1.invoices.create!(status: 0, created_at: "2012-03-09 20:54:52")
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 100, unit_price: 30, status: 0)
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 1, unit_price: 10, status: 0)
+        InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 2, unit_price: 140, status: 2)
+        Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+        ## Day 2 (Saturday) / Invoice 2 Revenue = 15000 BEST DAY!!!!!!!!!!!!!
+        invoice2 = customer1.invoices.create!(status: 0, created_at: "2012-03-10 20:54:52")
+        InvoiceItem.create!(invoice_id: invoice2.id, item_id: item1.id, quantity: 300, unit_price: 50, status: 1)
+        Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice2.id)
     visit '/admin/merchants'
     within("#top-5") do
-      expect(page).to have_content("CA$H earned: 12600")
-      expect("12600").to appear_before("12400")
-      expect("12400").to appear_before("11500")
-      expect("1400").to appear_before("1075")
+
+      expect("33520").to appear_before("18802")
+      expect("18802").to appear_before("18290")
+      expect("18290").to appear_before("8690")
+      expect("8690").to appear_before("4092")
+      expect("The Stornado").to appear_before("The Qornado")
+      expect("The Qornado").to appear_before("The Mornado")
+      expect("The Mornado").to appear_before("The Tornado")
+      expect("The Tornado").to appear_before("The Bornado")
     end
   end
 end

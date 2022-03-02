@@ -168,10 +168,10 @@ RSpec.describe Merchant, type: :model do
     invoice_item3 = InvoiceItem.create!(invoice_id: invoice5.id, item_id: item3.id, quantity: 5, unit_price: 100, status: 0)
     invoice_item8 = InvoiceItem.create!(invoice_id: invoice5.id, item_id: item2.id, quantity: 1, unit_price: 4500, status: 1)
     transaction5 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice5.id)
-    
+
     expect(merchant1.best_day).to eq("Monday, March 12, 2012")
   end
-    
+
   it 'tests the top five merchants model' do
     merchant1 = Merchant.create!(name: "The Tornado", status: 1)
     merchant3 = Merchant.create!(name: "The Mornado", status: 1)
@@ -212,7 +212,7 @@ RSpec.describe Merchant, type: :model do
     transaction4 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice4.id)
     transaction5 = Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice5.id)
 
-    expect(Merchant.top_merchant).to eq([merchant1,  merchant2, merchant4, merchant3, merchant6])
+    expect(Merchant.top_merchant).to eq([merchant2,  merchant1, merchant4, merchant3, merchant6])
     expect(Merchant.top_merchant).to_not include([merchant5])
   end
 end
