@@ -38,6 +38,23 @@ RSpec.describe Item, type: :model do
       expect(item1.status).to eq("disabled")
   end
 
+  it 'instance methods' do
+    item1 = create(:item, status: "enabled")
+    item2 = create(:item, status: "disabled")
+
+    expect(Item.enabled).to eq([item1])
+    expect(Item.disabled).to eq([item2])
+  end
+
+  it '#money_made' do
+    item1 = create(:item)
+
+    ii1 = create(:invoice_item, item: item1, unit_price: 10, quantity: 1)
+    ii2 = create(:invoice_item, item: item1, unit_price: 10, quantity: 1)
+
+    expect(item1.money_made).to eq(20)
+  end
+
     it  "best day with top five items setup" do
       merchant1 = Merchant.create!(name: "The Tornado")
       smart = merchant1.items.create!(name: "SmartPants", description: "IQ + 20", unit_price: 120)
