@@ -45,4 +45,13 @@ class Merchant < ApplicationRecord
     .order("revenue DESC")
     .limit(5)
   end
+
+  def favorite_customers
+    invoices.joins(:transactions, :customer)
+    .where(transactions: {result: :success})
+    .select('customers.*, transactions.count as transaction_count')
+    .group('customers.id')
+    .order('transaction_count desc')
+    .limit(5)
+  end
 end
