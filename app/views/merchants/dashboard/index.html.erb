@@ -1,23 +1,27 @@
-<%= @merchant.name %>
+<div class="container text-center">
+    <div class="merchant-adm">
+<ul>
+  <div>
+    <h2><%= @merchant.name %> Store</h2>
+<div>  <%= link_to "View store items", "/merchants/#{@merchant.id}/items" %><br><%= link_to "View invoices", "/merchants/#{@merchant.id}/invoices" %></div>
 
-<%= link_to "View store items", "/merchants/#{@merchant.id}/items" %>
-<%= link_to "View invoices", "/merchants/#{@merchant.id}/invoices" %>
+Potentially more merchant statistics in this column
+</ul>
 
-
+<div class="center-col2">
+<h2>Items ready to ship</h2>
 <% if @merchant.invoice_items.present? %>
-
-  <h2>Items ready to ship</h2>
-
     <% @merchant.ready_items.each do |invoice_item| %>
+    <div id="invoice_item-<%= invoice_item.id %>">
+      <ul>
+      <li>Name: <%=invoice_item.item.name%><br>
+      Invoice Number: <%=invoice_item.invoice.id%><br>
+      Order Date: <%=invoice_item.invoice.format_date%><br>
+      <%= link_to "View this invoice", "/merchants/#{@merchant.id}/invoices/#{invoice_item.invoice.id}" %></li>
 
-      <div id="invoice_item-<%= invoice_item.id %>">
-
-        <%= "Item name: #{invoice_item.item.name}" %>
-
-        <p><%= "Invoice Number: #{invoice_item.invoice.id} - created #{invoice_item.invoice.format_date}" %></p>
-
-        <%= link_to "View this invoice", "/merchants/#{@merchant.id}/invoices/#{invoice_item.invoice.id}" %><br><br>
-
-      </div>
-    <% end  %>
+      </ul>
+    </div>
+    <% end %>
 <% end %>
+</div>
+</div>
