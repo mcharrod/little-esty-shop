@@ -13,7 +13,6 @@ class Merchant < ApplicationRecord
   def ready_items
      invoice_items.where.not(status: 2)
      .joins(:invoice).order("invoices.created_at")
-
   end
 
   def ordered_items
@@ -38,11 +37,21 @@ class Merchant < ApplicationRecord
   end
 
   def self.top_merchant
-    joins(invoices: [invoice_items: :transactions])
+    joins(items: [invoices: :transactions])
     .where('transactions.result = 0')
     .select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue")
     .group(:id)
     .order("revenue DESC")
     .limit(5)
+  end
+
+  def best_day
+    items.joins(invoices: :transactions)
+    .where('transactions.result = 0')
+    .select('invoices.created_at, sum(invoice_items.quantity * invoice_items.unit_price) as revenue')
+    .group('invoices.created_at')
+    .order('revenue desc')
+    .order('invoices.created_at desc')
+    .first&.created_at&.strftime("%A, %B %d, %Y")
   end
 end
