@@ -145,6 +145,8 @@ RSpec.describe 'admin merchant index page', type: :feature do
       expect(page).to have_button("#{merchant2.name}")
       expect(page).to have_content("CA$H earned: 4092")
       expect(page).to have_content("Best day: Saturday, March 10, 2012")
+    end
+  end
 
   it "lists the top five merchants" do
     merchant = Merchant.create!(name: "The Kornado")
