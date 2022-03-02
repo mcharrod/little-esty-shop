@@ -3,12 +3,13 @@
 <h1>All Merchants</h1>
   <div id="new-link-top"><%= button_to "Add New Merchant", "/admin/merchants/new", method: :get %></div>
   <div class="merchant-adm">
-    <div class="left-div">
+    <div id="top-5" class="left-div">
       <ol>
         <h4>Top five merchants</h4>
+
         <% @merchants.top_merchant.each.with_index do |merchant, index|%>
           <li id="top-<%= index + 1 %>-of-5">
-          Name: <%= button_to "#{merchant.name} show", "/admin/merchants/#{merchant.id}", method: :get %>
+          Name: <%=merchant.name%> <%= button_to "#{merchant.name} dashboard", "/admin/merchants/#{merchant.id}", method: :get %>
           <br>CA$H earned: <%=merchant.revenue%>
           <br>Best day: <%= merchant.best_day %></li>
         <%end%>
@@ -18,7 +19,7 @@
 <div id="enabled">
 <h4>Active Merchants</h4>
 <% @merchants.enabled.each do |merchant| %>
-  <li id="merchant-<%= merchant.id %>">Name: <%= link_to "#{merchant.name}", "/admin/merchants/#{merchant.id}", method: :get %><br> Current status: <%= merchant.status %><br>
+  <li id="merchant-<%= merchant.id %>"class="center-col">Name: <%= link_to "#{merchant.name}", "/admin/merchants/#{merchant.id}", method: :get %><br> Current status: <%= merchant.status %><br>
   Merchant dashbord :<%= button_to "#{merchant.name} Dashboard", "/merchants/#{merchant.id}", method: :get %>
   <%= form_with url: "/admin/merchants/#{merchant.id}?status_button=true", method: :patch, local: true do |form| %>
   <% statusing = [ "enabled", "enable" ] %>
@@ -33,7 +34,7 @@
 <br>
 
 <br>
-<div id="disabled" class='right-div'>
+<div id="disabled" class='merch-right-div'>
 <ul>
   <h4>Inactive Merchants</h4>
 <% @merchants.disabled.each do |merchant| %>

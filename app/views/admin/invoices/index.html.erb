@@ -1,8 +1,11 @@
 <div class="container text-center">
-
+  <div class="merchant-adm">
+<ul>
 <h1>Admin: Invoices</h1>
 <% @invoices.each do |invoice| %>
-  <p><%=link_to "Invoice Number: #{invoice.id}", "/admin/invoices/#{invoice.id}" %>
-    <%="Order Status: #{invoice.status}" %></p>
+  <li><%=link_to "Invoice Number: #{invoice.id}", "/admin/invoices/#{invoice.id}" %>
+    <%="Order Status: #{invoice.status}" %></li>
 <% end  %>
+</ul>
 </div>
+</div

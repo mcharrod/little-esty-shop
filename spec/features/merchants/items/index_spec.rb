@@ -145,6 +145,7 @@ RSpec.describe 'merchant item index', type: :feature do
       expect("SunStoppers").to appear_before("FitPants")
       expect(page).to_not have_content("SpringSocks")
       expect(page).to_not have_content("UnderRoos")
+
       click_link("#{smart.name}")
       expect(current_path).to eq("/merchants/#{merchant1.id}/items/#{smart.id}")
     end
