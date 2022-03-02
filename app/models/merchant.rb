@@ -45,6 +45,15 @@ class Merchant < ApplicationRecord
     .limit(5)
   end
 
+  def favorite_customers
+    invoices.joins(:transactions, :customer)
+    .where(transactions: {result: :success})
+    .select('customers.*, transactions.count as transaction_count')
+    .group('customers.id')
+    .order('transaction_count desc')
+    .limit(5)
+  end
+
   def best_day
     items.joins(invoices: :transactions)
     .where('transactions.result = 0')

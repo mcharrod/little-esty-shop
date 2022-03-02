@@ -107,4 +107,129 @@ describe "Merchant Dashboard", type: :feature do
     expect(middle).to appear_before(newest)
     expect(page).not_to have_content(no_show_invoice.id)
   end
+
+  it 'Favorite Customers section' do
+    ## merchant 1 is the protagonist of the test! Death to all other merchants!!!!!!!!!!!
+    merchant1 = Merchant.create!(name: "The Tornado", status: 1)
+    item1 = merchant1.items.create!(name: "SmartPants", description: "IQ + 20", unit_price: 120)
+    ## 1 Transaction - should not rank
+    customer1 = Customer.create!(first_name: "Marky", last_name: "Mark" )
+    invoice1 = customer1.invoices.create!(status: 0)
+    InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    ## 7 Transactions on 1 invoice // The #1 favorite
+    customer2 = Customer.create!(first_name: "Narky", last_name: "Nark" )
+    invoice1 = customer2.invoices.create!(status: 0)
+    InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    ## 2 Transactions over 2 invoices // The #5 favorite
+    customer3 = Customer.create!(first_name: "Varky", last_name: "Vark" )
+    invoice1 = customer3.invoices.create!(status: 0)
+    invoice2 = customer3.invoices.create!(status: 0)
+    InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+    InvoiceItem.create!(invoice_id: invoice2.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice2.id)
+    ## 6 Transactions over 2 invoices, plus a bunch of transactions with another merchant // The #2 favorite
+    customer4 = Customer.create!(first_name: "Sharky", last_name: "Shark" )
+    invoice1 = customer4.invoices.create!(status: 0)
+    invoice2 = customer4.invoices.create!(status: 0)
+    InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+    InvoiceItem.create!(invoice_id: invoice2.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice2.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice2.id)
+    merchant2 = Merchant.create!(name: "The Tornado", status: 1)
+    item2 = merchant2.items.create!(name: "SmartPants", description: "IQ + 20", unit_price: 120)
+    invoice1 = customer4.invoices.create!(status: 0)
+    InvoiceItem.create!(invoice_id: invoice1.id, item_id: item2.id, quantity: 2, unit_price: 2000, status: 0)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 7894542, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 3456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 34563456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 3645, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 345634566, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 65433333, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 9872334, result: 0, invoice_id: invoice1.id)
+    ## 8 Transactions on 5 invoices, but 4 transactions fail /4 total/ The #3 favorite
+    customer5 = Customer.create!(first_name: "Clarky", last_name: "Clark" )
+    invoice1 = customer5.invoices.create!(status: 0)
+    invoice2 = customer5.invoices.create!(status: 0)
+    invoice3 = customer5.invoices.create!(status: 0)
+    invoice4 = customer5.invoices.create!(status: 0)
+    invoice5 = customer5.invoices.create!(status: 0)
+    InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+    InvoiceItem.create!(invoice_id: invoice2.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+    InvoiceItem.create!(invoice_id: invoice3.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+    InvoiceItem.create!(invoice_id: invoice4.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+    InvoiceItem.create!(invoice_id: invoice5.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    Transaction.create!(credit_card_number: 123456, result: 1, invoice_id: invoice2.id)
+    Transaction.create!(credit_card_number: 123456, result: 1, invoice_id: invoice2.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice3.id)
+    Transaction.create!(credit_card_number: 123456, result: 1, invoice_id: invoice4.id)
+    Transaction.create!(credit_card_number: 123456, result: 1, invoice_id: invoice4.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice5.id)
+    ## 1 Transaction for the merchant, 1 for another merchant (doesn't count), 2 transactions on a shared invoice between them (should count) /3 total/ The #4 favorite
+    customer6 = Customer.create!(first_name: "Barky", last_name: "Bark" )
+    merchant2 = Merchant.create!(name: "The Tornado", status: 1)
+    item2 = merchant2.items.create!(name: "SmartPants", description: "IQ + 20", unit_price: 120)
+    invoice1 = customer6.invoices.create!(status: 0)
+    InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice1.id)
+    invoice2 = customer6.invoices.create!(status: 0)
+    InvoiceItem.create!(invoice_id: invoice2.id, item_id: item2.id, quantity: 2, unit_price: 2000, status: 0)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice2.id)
+    invoice3 = customer6.invoices.create!(status: 0)
+    InvoiceItem.create!(invoice_id: invoice3.id, item_id: item1.id, quantity: 2, unit_price: 2000, status: 0)
+    InvoiceItem.create!(invoice_id: invoice3.id, item_id: item2.id, quantity: 2, unit_price: 2000, status: 0)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice3.id)
+    Transaction.create!(credit_card_number: 123456, result: 0, invoice_id: invoice3.id)
+
+    visit "/merchants/#{merchant1.id}"
+
+    within("#favorite-customer-1") do
+      expect(page).to have_content(customer2.first_name)
+      expect(page).to have_content(customer2.last_name)
+      expect(page).to have_content("7 successful transactions")
+    end
+
+    within("#favorite-customer-2") do
+      expect(page).to have_content(customer4.first_name)
+      expect(page).to have_content(customer4.last_name)
+      expect(page).to have_content("6 successful transactions")
+    end
+
+    within("#favorite-customer-3") do
+      expect(page).to have_content(customer5.first_name)
+      expect(page).to have_content(customer5.last_name)
+      expect(page).to have_content("4 successful transactions")
+    end
+
+    within("#favorite-customer-4") do
+      expect(page).to have_content(customer6.first_name)
+      expect(page).to have_content(customer6.last_name)
+      expect(page).to have_content("3 successful transactions")
+    end
+
+    within("#favorite-customer-5") do
+      expect(page).to have_content(customer3.first_name)
+      expect(page).to have_content(customer3.last_name)
+      expect(page).to have_content("2 successful transactions")
+    end
+
+    expect(page).to_not have_content(customer1.first_name)
+    expect(page).to_not have_content(customer1.last_name)
+    expect(page).to_not have_content("1 successful transactions")
+  end
 end
