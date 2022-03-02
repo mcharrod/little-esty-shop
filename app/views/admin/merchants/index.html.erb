@@ -7,7 +7,7 @@
       <ol>
         <h4>Top five merchants</h4>
         <% @merchants.top_merchant.each do |merchant|%>
-        <li>  Name: <%= button_to "#{merchant.name} show", "/admin/merchants/#{merchant.id}", method: :get %> CA$H earned: <%=merchant.revenue%></li>
+        <li>  Name: <%= button_to "#{merchant.name}", "/admin/merchants/#{merchant.id}", method: :get %> CA$H earned: <%=merchant.revenue%></li>
         <%end%>
       </ol>
     </div>
