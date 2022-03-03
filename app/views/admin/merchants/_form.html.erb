@@ -1,0 +1,14 @@
+<%= form_with url: path, method: method, local: true do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name, value: prefill  %>
+
+  <% if hidden %>
+    <%= f.hidden_field :status, :value => "disabled" %>
+  <% end %>
+
+  <% if dropdown %>
+  <%= f.select :status, options_for_select(["disabled", "enabled"]), class: 'form-control' %>
+  <% end %>
+
+  <%= f.submit label %>
+<% end %>
