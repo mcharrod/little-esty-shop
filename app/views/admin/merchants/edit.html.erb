@@ -3,12 +3,8 @@
 <%= render partial: "form", locals: {
                                       path: "/admin/merchants/#{@merchant.id}",
                                       method: :patch,
-                                      label: "Update Merchant"
+                                      label: "Update Merchant",
+                                      hidden: nil,
+                                      dropdown: "yes",
+                                      prefill: @merchant.name
                                     } %>
-
-<%= #form_with url: "/admin/merchants/#{@merchant.id}", method: :patch, local: true do |form| %>
-  <%= #form.label :name %>
-  <%= #form.text_field :name, value: @merchant.name %>
-  <%= form.select :status, options_for_select(["disabled", "enabled"]), class: 'form-control' %>
-  <%= #form.submit "Update Merchant" %>
-<% end %>
