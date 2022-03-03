@@ -4,7 +4,6 @@ RSpec.describe 'Creating a new merchant:', type: :feature do
 
   it 'happy path' do
     visit '/admin/merchants'
-
     within("#new-link-top") do
         click_button("Add New Merchant")
     end
