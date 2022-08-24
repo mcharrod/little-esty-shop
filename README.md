@@ -29,6 +29,7 @@ This project requires Ruby 2.7.4.
     * `rails db:create`
 * Run the test suite with `bundle exec rspec`.
 * Run your development server with `rails s` to see the app in action.
+* Run the custom rake commands to migrate the CSV database: `rake csv_load:all` 
 
 ## Phases
 
