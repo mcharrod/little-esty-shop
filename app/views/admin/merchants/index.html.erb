@@ -12,7 +12,7 @@
   <div class="card-body">
     <h5 class="card-title"> <%= merchant.name %></h5>
     <h6 class="card-subtitle mb-2 text-muted">Merchant</h6>
-    <a href= <% "/admin/merchants/#{merchant.id}" %> class="btn btn-primary">View this merchant</a>
+    <%= link_to "View this merchant", "/merchants/#{merchant.id}"%>
     <%= form_with url: "/admin/merchants/#{merchant.id}?status_button=true", method: :patch, local: true do |form| %>
     <% statusing = [ "enabled", "enable" ] %>
     <% statusing = [ "disabled", "disable" ] if merchant.status == "enabled" %>
@@ -36,7 +36,7 @@
   <div class="card-body">
     <h5 class="card-title"> <%= merchant.name %></h5>
     <h6 class="card-subtitle mb-2 text-muted">Merchant</h6>
-    <a href= <% "/merchants/#{merchant.id}" %> >View this merchant</a>
+    <%= link_to "View this merchant", "/merchants/#{merchant.id}"%>
     <%= form_with url: "/admin/merchants/#{merchant.id}?status_button=true", method: :patch, local: true do |form| %>
     <% statusing = [ "enabled", "enable" ] %>
     <% statusing = [ "disabled", "disable" ] if merchant.status == "enabled" %>
