@@ -1,4 +1,5 @@
 <h1>All Merchants</h1>
+<p>This is an exhaustive list of all current merchants from our database. You can activate or deactivate their shops from here. </p>
 <div class="merchant-div">
 <br>
 <ul>
@@ -6,14 +7,20 @@
   <div id="new-link-top"><%= button_to "Add New Merchant", "/admin/merchants/new", method: :get %><br>
 <h4>Active Merchants</h4>
 <% @merchants.enabled.each do |merchant| %>
-  <li id="merchant-<%= merchant.id %>">Name: <%= merchant.name %> <br> Current status: <%= merchant.status %>
-  <%= form_with url: "/admin/merchants/#{merchant.id}?status_button=true", method: :patch, local: true do |form| %>
-  <% statusing = [ "enabled", "enable" ] %>
-  <% statusing = [ "disabled", "disable" ] if merchant.status == "enabled" %>
-  <%= form.hidden_field :status, value: statusing[0] %>
-  <%= form.submit statusing[1] %>
-  </li><br>
-  <% end %>
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"> <%= merchant.name %></h5>
+    <h6 class="card-subtitle mb-2 text-muted">Merchant</h6>
+    <%= form_with url: "/admin/merchants/#{merchant.id}?status_button=true", method: :patch, local: true do |form| %>
+    <% statusing = [ "enabled", "enable" ] %>
+    <% statusing = [ "disabled", "disable" ] if merchant.status == "enabled" %>
+    <%= form.hidden_field :status, value: statusing[0] %>
+    <%= form.submit statusing[1] %>
+    <% end %>
+  </div>
+</div>
+<br>
 <% end %>
 </div>
 </ul>
@@ -23,14 +30,21 @@
 <div id="disabled" class='right-div'>
   <h4>Inactive Merchants</h4>
 <% @merchants.disabled.each do |merchant| %>
-  <li id="merchant-<%= merchant.id %>">Name: <%= merchant.name %> <br> Current status: <%= merchant.status %>
-  <%= form_with url: "/admin/merchants/#{merchant.id}?status_button=true", method: :patch, local: true do |form| %>
-  <% statusing = [ "enabled", "enable" ] %>
-  <% statusing = [ "disabled", "disable" ] if merchant.status == "enabled" %>
-  <%= form.hidden_field :status, value: statusing[0] %>
-  <%= form.submit statusing[1] %>
-  </li><br>
-  <% end %>
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"> <%= merchant.name %></h5>
+    <h6 class="card-subtitle mb-2 text-muted">Merchant</h6>
+    <%= form_with url: "/admin/merchants/#{merchant.id}?status_button=true", method: :patch, local: true do |form| %>
+    <% statusing = [ "enabled", "enable" ] %>
+    <% statusing = [ "disabled", "disable" ] if merchant.status == "enabled" %>
+    <%= form.hidden_field :status, value: statusing[0] %>
+    <%= form.submit statusing[1] %>
+    <% end %>
+  </div>
+</div>
+<br>
+
 <% end %>
 </div>
 <br>
