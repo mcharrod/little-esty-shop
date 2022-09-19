@@ -3,8 +3,10 @@ require 'csv'
 namespace :csv_load do
 
   task merchants: :environment do
+    binding.pry
     Merchant.destroy_all
     CSV.foreach('./db/data/merchants.csv', headers: true) do |row|
+      binding.pry
       Merchant.create!(row.to_h)
     end
 

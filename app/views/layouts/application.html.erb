@@ -9,8 +9,21 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-  <button><a href="/admin">Admin</a></button>  <button><a href="/admin/merchants"> Admin Merchants</a></button>
-      <button><a href="/admin/invoices">Admin invoices</a></button>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Little Esty Shop</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="/admin">Admin</a>
+      <a class="nav-item nav-link" href="/admin/invoices">Admin Invoices</a>
+      <a class="nav-item nav-link" href="/admin/merchants">Admin Merchants</a>
+    </div>
+  </div>
+</nav>
   <body>
     <% flash.each do |type, msg| %>
       <div>
