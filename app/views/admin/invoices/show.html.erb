@@ -14,7 +14,7 @@
       <%end%></div><br>
     </ul>
 
-    <h3> Material items for a material girl </h3>
+    <h3> Items in invoice </h3>
     <ul>
       <%@invoice.invoice_items.each do |item| %>
         <p><li>Item id: <%=item.id%></li>
@@ -27,4 +27,3 @@
     </ul>
 
   <h3> Total amount from <%="#{@invoice.customer.first_name}"%>'s invoice: $<%= "#{@invoice.total_revenue}"%>
-

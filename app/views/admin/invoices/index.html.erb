@@ -1,8 +1,19 @@
 <div class="container text-center">
 
-<h1>Admin: Invoices</h1>
+<h1>Admin Invoices</h1>
+<p> This is an exhaustive list of all invoices in our database. You can navigate to their order page to view more information.</p>
 <% @invoices.each do |invoice| %>
-  <p><%=link_to "Invoice Number: #{invoice.id}", "/admin/invoices/#{invoice.id}" %>
-    <%="Order Status: #{invoice.status}" %></p>
+
+<div class="card">
+  <div class="card-header">
+    Featured
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Invoice ID <%= invoice.id %></h5>
+    <p class="card-text">Order status: <%= invoice.status %></p>
+    <a href= <%= "/admin/invoices/#{invoice.id}" %> class="btn btn-primary">View this invoice</a>
+  </div>
+</div>
+<br>
 <% end  %>
 </div>
